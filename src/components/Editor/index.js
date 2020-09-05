@@ -6,12 +6,27 @@ import grapesjsTabs from "grapesjs-tabs";
 import grapesjsCustomCode from "grapesjs-custom-code";
 import grapesjsTooltip from "grapesjs-tooltip";
 import grapesjsTyped from "grapesjs-typed";
-import pluginProductList from "./plugins/ProductList";
-import pluginSlider from "./plugins/Slider";
+import grapesjsStyleGradient from "grapesjs-style-gradient";
+import CKEDITOR from "ckeditor/ckeditor";
+import "grapesjs-plugin-ckeditor";
+import gjsPresetNewsletter from "grapesjs-preset-newsletter";
+
+// Custom Plugins
+// import pluginProductList from "./plugins/ProductList";
+// import pluginSlider from "./plugins/Slider";
 
 // Stylesheets
 import "grapesjs/dist/css/grapes.min.css";
 import "grapesjs-preset-webpage/dist/grapesjs-preset-webpage.min.css";
+import "grapick/dist/grapick.min.css";
+
+/**
+ *
+ * Gradient is not working
+ * CKEditor is not working
+ *
+ * Of both dependencies are installed
+ */
 
 function Editor({ id }) {
   let editor = null;
@@ -23,6 +38,7 @@ function Editor({ id }) {
         avoidInlineStyle: 1,
         fromElement: 1,
         showOffsets: 1,
+        height: "100vh",
         styleManager: { clearProperties: 1 },
         modal: {
           backdrop: false,
@@ -31,14 +47,15 @@ function Editor({ id }) {
           autoSave: 0,
         },
         plugins: [
+          gjsPresetNewsletter,
+          "gjs-plugin-ckeditor",
           gjsPresetWebpage,
+          grapesjsStyleGradient,
           grapesjsLorySlider,
           grapesjsTabs,
           grapesjsCustomCode,
           grapesjsTooltip,
           grapesjsTyped,
-          pluginProductList,
-          pluginSlider,
         ],
         pluginsOpts: {
           [gjsPresetWebpage]: {
@@ -47,17 +64,33 @@ function Editor({ id }) {
           [grapesjsLorySlider]: {
             /* options */
           },
-          [grapesjsTabs]: {
-            /* options */
+          [grapesjsTabs]: {},
+          [grapesjsCustomCode]: {},
+          [grapesjsTooltip]: {},
+          [grapesjsTyped]: {},
+          [grapesjsStyleGradient]: {},
+          [gjsPresetNewsletter]: {
+            modalTitleImport: "Import template",
+            // ... other options
           },
-          [grapesjsCustomCode]: {
-            /* options */
-          },
-          [grapesjsTooltip]: {
-            /* options */
-          },
-          [grapesjsTyped]: {
-            /* options */
+          "gjs-plugin-ckeditor": {
+            position: "center",
+            options: {
+              startupFocus: true,
+              // Allows any class and any inline style
+              extraAllowedContent: "*(*);*{*}",
+              // Disable auto-formatting, class removing, etc.
+              allowedContent: true,
+              enterMode: CKEDITOR.ENTER_BR,
+              extraPlugins: "sharedspace,justify,colorbutton,panelbutton,font",
+              toolbar: [
+                { name: "styles", items: ["Font", "FontSize"] },
+                ["Bold", "Italic", "Underline", "Strike"],
+                { name: "paragraph", items: ["NumberedList", "BulletedList"] },
+                { name: "links", items: ["Link", "Unlink"] },
+                { name: "colors", items: ["TextColor", "BGColor"] },
+              ],
+            },
           },
         },
 
