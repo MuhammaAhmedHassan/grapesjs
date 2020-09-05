@@ -19,7 +19,6 @@ import gjsPresetNewsletter from "grapesjs-preset-newsletter";
 import "grapesjs/dist/css/grapes.min.css";
 import "grapesjs-preset-webpage/dist/grapesjs-preset-webpage.min.css";
 import "grapick/dist/grapick.min.css";
-
 /**
  *
  * Gradient is not working
@@ -68,7 +67,13 @@ function Editor({ id }) {
           [grapesjsCustomCode]: {},
           [grapesjsTooltip]: {},
           [grapesjsTyped]: {},
-          [grapesjsStyleGradient]: {},
+          [grapesjsStyleGradient]: {
+            colorPicker: 'default',
+            grapickOpts: {
+            min: 1,
+            max: 99,
+            }
+          },
           [gjsPresetNewsletter]: {
             modalTitleImport: "Import template",
             // ... other options
@@ -135,6 +140,14 @@ function Editor({ id }) {
           ],
         },
       }); // end grapesjs.init()
+
+      e.editor.attributes.StyleManager.addProperty('decorations', {
+        name: 'Gradient',
+        property: 'background-color',
+        type: 'gradient',
+        defaults: 'none'
+      });
+      console.log("Editor", e.editor.attributes.StyleManager)
 
       // Remaining code
     } else {
