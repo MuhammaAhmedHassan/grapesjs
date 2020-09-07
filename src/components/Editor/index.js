@@ -6,7 +6,7 @@ import grapesjsTabs from "grapesjs-tabs";
 import grapesjsCustomCode from "grapesjs-custom-code";
 import grapesjsTooltip from "grapesjs-tooltip";
 import grapesjsTyped from "grapesjs-typed";
-import grapesjsStyleGradient from "grapesjs-style-gradient";
+import "grapesjs-style-gradient";
 import CKEDITOR from "ckeditor/ckeditor";
 import "grapesjs-plugin-ckeditor";
 import gjsPresetNewsletter from "grapesjs-preset-newsletter";
@@ -19,6 +19,7 @@ import gjsPresetNewsletter from "grapesjs-preset-newsletter";
 import "grapesjs/dist/css/grapes.min.css";
 import "grapesjs-preset-webpage/dist/grapesjs-preset-webpage.min.css";
 import "grapick/dist/grapick.min.css";
+import "grapesjs-plugin-ckeditor/dist/grapesjs-plugin-ckeditor.min.js"
 /**
  *
  * Gradient is not working
@@ -47,9 +48,9 @@ function Editor({ id }) {
         },
         plugins: [
           gjsPresetNewsletter,
-          "gjs-plugin-ckeditor",
+          "grapesjs-plugin-ckeditor",
           gjsPresetWebpage,
-          grapesjsStyleGradient,
+          'grapesjs-style-gradient',
           grapesjsLorySlider,
           grapesjsTabs,
           grapesjsCustomCode,
@@ -67,7 +68,7 @@ function Editor({ id }) {
           [grapesjsCustomCode]: {},
           [grapesjsTooltip]: {},
           [grapesjsTyped]: {},
-          [grapesjsStyleGradient]: {
+          'grapesjs-style-gradient': {
             colorPicker: 'default',
             grapickOpts: {
             min: 1,
@@ -78,7 +79,7 @@ function Editor({ id }) {
             modalTitleImport: "Import template",
             // ... other options
           },
-          "gjs-plugin-ckeditor": {
+          "grapesjs-plugin-ckeditor": {
             position: "center",
             options: {
               startupFocus: true,
@@ -140,10 +141,9 @@ function Editor({ id }) {
           ],
         },
       }); // end grapesjs.init()
-
       e.editor.attributes.StyleManager.addProperty('decorations', {
         name: 'Gradient',
-        property: 'background-color',
+        property: 'background-image',
         type: 'gradient',
         defaults: 'none'
       });
