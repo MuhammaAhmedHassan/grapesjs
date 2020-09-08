@@ -13,7 +13,7 @@ import gjsPresetNewsletter from "grapesjs-preset-newsletter";
 
 // Custom Plugins
 // import pluginProductList from "./plugins/ProductList";
-// import pluginSlider from "./plugins/Slider";
+import pluginSlider from "./plugins/Sample/Rating";
 
 // Stylesheets
 import "grapesjs/dist/css/grapes.min.css";
@@ -56,8 +56,10 @@ function Editor({ id }) {
           grapesjsCustomCode,
           grapesjsTooltip,
           grapesjsTyped,
+          pluginSlider
         ],
         pluginsOpts: {
+          [pluginSlider]: {},
           [gjsPresetWebpage]: {
             textLayout: "Hello world",
           },
