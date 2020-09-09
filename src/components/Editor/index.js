@@ -17,24 +17,13 @@ import gjsPluginFilestack from "grapesjs-plugin-filestack";
 import gjsBlocksFlexbox from "grapesjs-blocks-flexbox";
 import gjsTouch from "grapesjs-touch";
 import gjsBlocksBootstrap4 from "grapesjs-blocks-bootstrap4";
-// Custom Plugins
-// import pluginProductList from "./plugins/ProductList";
-import pluginSlider from "./plugins/Sample/Rating";
-// import CustomModal from "./plugins/Modal";
+import cardPlugin from "./plugins/CustomCard";
 
 // Stylesheets
 import "grapesjs/dist/css/grapes.min.css";
 import "grapick/dist/grapick.min.css";
 import "grapesjs-preset-webpage/dist/grapesjs-preset-webpage.min.css";
 import "grapesjs-plugin-ckeditor/dist/grapesjs-plugin-ckeditor.min.js";
-
-/**
- *
- * Gradient is not working
- * CKEditor is not working
- *
- * Of both dependencies are installed
- */
 
 function Editor({ id }) {
   let editor = null;
@@ -65,16 +54,16 @@ function Editor({ id }) {
           grapesjsCustomCode,
           grapesjsTooltip,
           grapesjsTyped,
-          pluginSlider,
           gjsModal,
           gjsStyleBg,
           gjsStyleFilter,
           gjsBlocksFlexbox,
           gjsTouch,
-
-          gjsBlocksBootstrap4,
+          cardPlugin,
+          //gjsBlocksBootstrap4,
         ],
         pluginsOpts: {
+          [cardPlugin]: {},
           [gjsTouch]: {},
           [gjsBlocksFlexbox]: {},
           // [gjsPluginFilestack]: {},
@@ -82,14 +71,6 @@ function Editor({ id }) {
           [gjsStyleBg]: {
             /* options */
           },
-          // or
-          // plugins: [
-          //   (editor) =>
-          //     plugin(editor, {
-          //       /* options */
-          //     }),
-          // ],
-          [pluginSlider]: {},
           [gjsPresetWebpage]: {
             textLayout: "Hello world",
           },
@@ -130,7 +111,7 @@ function Editor({ id }) {
               ],
             },
           },
-          [gjsBlocksBootstrap4]: {
+          /* [gjsBlocksBootstrap4]: {
             blocks: {},
             blockCategories: {
               // ...
@@ -139,7 +120,7 @@ function Editor({ id }) {
               // ...
             },
             // ...
-          },
+          }, */
         },
 
         canvas: {
@@ -148,6 +129,7 @@ function Editor({ id }) {
             "https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css",
             "https://fonts.googleapis.com/css?family=Roboto&display=swap",
             "https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css",
+            "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css",
           ],
           scripts: [
             "https://code.jquery.com/jquery-3.3.1.slim.min.js",
@@ -184,18 +166,23 @@ function Editor({ id }) {
           ],
         },
       }); // end grapesjs.init()
-      e.editor.attributes.StyleManager.addProperty("decorations", {
-        name: "Gradient",
-        property: "background-image",
-        type: "gradient",
-        defaults: "none",
-      });
-      console.log("Editor", e.editor.attributes.StyleManager);
-
+      let htmlContent = e.editor.getHtml();
+      let cssContent = e.editor.getCss();
+      debugger;
       var blockManager = e.BlockManager;
-      blockManager.add("my-first-block", {
-        label: "Simple block",
+      blockManager.add("video", {
+        label: "Background video",
         category: "Section",
+        content: `
+        <div>
+          <p>Hello</p>
+        </div>
+        `,
+      });
+      /* blockManager.add("my-first-block", {
+        label: "Modal",
+        category: "Section",
+        attributes: {class: 'fa fa-keyboard'},
         content: `<!-- Button trigger modal -->
           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
             Launch demo modal
@@ -221,19 +208,7 @@ function Editor({ id }) {
               </div>
             </div>
           </div>`,
-      });
-      blockManager.add("custom-card", {
-        label: "Custom Card",
-        category: "Section",
-        content: `<div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="..." alt="Card image cap">
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
-        </div>
-      </div>`,
-      });
+      }); */
 
       // Remaining code
     } else {

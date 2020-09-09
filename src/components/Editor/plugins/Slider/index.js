@@ -10,6 +10,9 @@ export default (editor) => {
   blockManager.add(SLIDER, {
     category: "Basic",
     label: "Slider",
+    attributes: {
+      title: 'My title'
+    },
     content: `<div data-gjs-type="${SLIDER}"/><style>${style}</style>`,
   });
 };
