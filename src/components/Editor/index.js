@@ -179,10 +179,10 @@ function Editor({ id }) {
         </div>
         `,
       });
-      /* blockManager.add("my-first-block", {
+      blockManager.add("my-first-block", {
         label: "Modal",
         category: "Section",
-        attributes: {class: 'fa fa-keyboard'},
+        attributes: { class: "fa fa-keyboard" },
         content: `<!-- Button trigger modal -->
           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
             Launch demo modal
@@ -208,7 +208,7 @@ function Editor({ id }) {
               </div>
             </div>
           </div>`,
-      }); */
+      });
 
       // Remaining code
     } else {
