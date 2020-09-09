@@ -10,16 +10,24 @@ import "grapesjs-style-gradient";
 import CKEDITOR from "ckeditor/ckeditor";
 import "grapesjs-plugin-ckeditor";
 import gjsPresetNewsletter from "grapesjs-preset-newsletter";
-
+import gjsModal from "grapesjs-plugin-modal";
+import gjsStyleBg from "grapesjs-style-bg";
+import gjsStyleFilter from "grapesjs-style-filter";
+import gjsPluginFilestack from "grapesjs-plugin-filestack";
+import gjsBlocksFlexbox from "grapesjs-blocks-flexbox";
+import gjsTouch from "grapesjs-touch";
+import gjsBlocksBootstrap4 from "grapesjs-blocks-bootstrap4";
 // Custom Plugins
 // import pluginProductList from "./plugins/ProductList";
 import pluginSlider from "./plugins/Sample/Rating";
+// import CustomModal from "./plugins/Modal";
 
 // Stylesheets
 import "grapesjs/dist/css/grapes.min.css";
-import "grapesjs-preset-webpage/dist/grapesjs-preset-webpage.min.css";
 import "grapick/dist/grapick.min.css";
-import "grapesjs-plugin-ckeditor/dist/grapesjs-plugin-ckeditor.min.js"
+import "grapesjs-preset-webpage/dist/grapesjs-preset-webpage.min.css";
+import "grapesjs-plugin-ckeditor/dist/grapesjs-plugin-ckeditor.min.js";
+
 /**
  *
  * Gradient is not working
@@ -47,18 +55,40 @@ function Editor({ id }) {
           autoSave: 0,
         },
         plugins: [
+          // gjsPluginFilestack,
           gjsPresetNewsletter,
           "grapesjs-plugin-ckeditor",
           gjsPresetWebpage,
-          'grapesjs-style-gradient',
+          "grapesjs-style-gradient",
           grapesjsLorySlider,
           grapesjsTabs,
           grapesjsCustomCode,
           grapesjsTooltip,
           grapesjsTyped,
-          pluginSlider
+          pluginSlider,
+          gjsModal,
+          gjsStyleBg,
+          gjsStyleFilter,
+          gjsBlocksFlexbox,
+          gjsTouch,
+
+          gjsBlocksBootstrap4,
         ],
         pluginsOpts: {
+          [gjsTouch]: {},
+          [gjsBlocksFlexbox]: {},
+          // [gjsPluginFilestack]: {},
+          [gjsStyleFilter]: {},
+          [gjsStyleBg]: {
+            /* options */
+          },
+          // or
+          // plugins: [
+          //   (editor) =>
+          //     plugin(editor, {
+          //       /* options */
+          //     }),
+          // ],
           [pluginSlider]: {},
           [gjsPresetWebpage]: {
             textLayout: "Hello world",
@@ -70,12 +100,12 @@ function Editor({ id }) {
           [grapesjsCustomCode]: {},
           [grapesjsTooltip]: {},
           [grapesjsTyped]: {},
-          'grapesjs-style-gradient': {
-            colorPicker: 'default',
+          "grapesjs-style-gradient": {
+            colorPicker: "default",
             grapickOpts: {
-            min: 1,
-            max: 99,
-            }
+              min: 1,
+              max: 99,
+            },
           },
           [gjsPresetNewsletter]: {
             modalTitleImport: "Import template",
@@ -100,18 +130,29 @@ function Editor({ id }) {
               ],
             },
           },
+          [gjsBlocksBootstrap4]: {
+            blocks: {},
+            blockCategories: {
+              // ...
+            },
+            labels: {
+              // ...
+            },
+            // ...
+          },
         },
 
         canvas: {
           styles: [
+            "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css",
             "https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css",
-            "https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/css/bootstrap.min.css",
             "https://fonts.googleapis.com/css?family=Roboto&display=swap",
             "https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css",
           ],
           scripts: [
-            "https://code.jquery.com/jquery-1.11.0.min.js",
-            "https://code.jquery.com/jquery-migrate-1.2.1.min.js",
+            "https://code.jquery.com/jquery-3.3.1.slim.min.js",
+            "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js",
+            "https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js",
             "https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js",
           ],
         },
@@ -143,13 +184,56 @@ function Editor({ id }) {
           ],
         },
       }); // end grapesjs.init()
-      e.editor.attributes.StyleManager.addProperty('decorations', {
-        name: 'Gradient',
-        property: 'background-image',
-        type: 'gradient',
-        defaults: 'none'
+      e.editor.attributes.StyleManager.addProperty("decorations", {
+        name: "Gradient",
+        property: "background-image",
+        type: "gradient",
+        defaults: "none",
       });
-      console.log("Editor", e.editor.attributes.StyleManager)
+      console.log("Editor", e.editor.attributes.StyleManager);
+
+      var blockManager = e.BlockManager;
+      blockManager.add("my-first-block", {
+        label: "Simple block",
+        category: "Section",
+        content: `<!-- Button trigger modal -->
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+            Launch demo modal
+          </button>
+          
+          <!-- Modal -->
+          <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  ...
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+              </div>
+            </div>
+          </div>`,
+      });
+      blockManager.add("custom-card", {
+        label: "Custom Card",
+        category: "Section",
+        content: `<div class="card" style="width: 18rem;">
+        <img class="card-img-top" src="..." alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title">Card title</h5>
+          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+          <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+      </div>`,
+      });
 
       // Remaining code
     } else {
@@ -166,7 +250,32 @@ function Editor({ id }) {
     };
   }, []);
 
-  return <div id={id} />;
+  return (
+    <>
+      <link
+        rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous"
+      ></link>
+      <div id={id} />
+      <script
+        src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"
+      ></script>
+      <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"
+      ></script>
+      <script
+        src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"
+      ></script>
+    </>
+  );
 }
 
 export default Editor;
