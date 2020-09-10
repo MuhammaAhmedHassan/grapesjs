@@ -1,12 +1,10 @@
-
 export default (editor) => {
-
   const blockManager = editor.BlockManager;
 
   blockManager.add("custom-card", {
     label: "Card",
-    category: "Section",
-    attributes: {class: 'fa fa-address-card'},
+    category: "Advanced",
+    attributes: { class: "fa fa-address-card" },
     content: `<div class="card" style="width: 18rem;">
     <img class="card-img-top" src="..." alt="Card image cap">
     <div class="card-body">

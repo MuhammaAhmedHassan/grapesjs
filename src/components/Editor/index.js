@@ -6,19 +6,14 @@ import grapesjsTabs from "grapesjs-tabs";
 import grapesjsCustomCode from "grapesjs-custom-code";
 import grapesjsTooltip from "grapesjs-tooltip";
 import grapesjsTyped from "grapesjs-typed";
-import "grapesjs-style-gradient";
-import CKEDITOR from "ckeditor/ckeditor";
-import "grapesjs-plugin-ckeditor";
 import gjsPresetNewsletter from "grapesjs-preset-newsletter";
 import gjsModal from "grapesjs-plugin-modal";
 import gjsStyleBg from "grapesjs-style-bg";
 import gjsStyleFilter from "grapesjs-style-filter";
-import gjsPluginFilestack from "grapesjs-plugin-filestack";
 import gjsBlocksFlexbox from "grapesjs-blocks-flexbox";
 import gjsTouch from "grapesjs-touch";
-import gjsBlocksBootstrap4 from "grapesjs-blocks-bootstrap4";
 import cardPlugin from "./plugins/CustomCard";
-
+import "grapesjs-plugin-modal/dist/grapesjs-plugin-modal.min.js";
 // Stylesheets
 import "grapesjs/dist/css/grapes.min.css";
 import "grapick/dist/grapick.min.css";
@@ -44,11 +39,8 @@ function Editor({ id }) {
           autoSave: 0,
         },
         plugins: [
-          // gjsPluginFilestack,
           gjsPresetNewsletter,
-          "grapesjs-plugin-ckeditor",
           gjsPresetWebpage,
-          "grapesjs-style-gradient",
           grapesjsLorySlider,
           grapesjsTabs,
           grapesjsCustomCode,
@@ -60,9 +52,9 @@ function Editor({ id }) {
           gjsBlocksFlexbox,
           gjsTouch,
           cardPlugin,
-          //gjsBlocksBootstrap4,
         ],
         pluginsOpts: {
+          [gjsModal]: {},
           [cardPlugin]: {},
           [gjsTouch]: {},
           [gjsBlocksFlexbox]: {},
@@ -81,46 +73,10 @@ function Editor({ id }) {
           [grapesjsCustomCode]: {},
           [grapesjsTooltip]: {},
           [grapesjsTyped]: {},
-          "grapesjs-style-gradient": {
-            colorPicker: "default",
-            grapickOpts: {
-              min: 1,
-              max: 99,
-            },
-          },
           [gjsPresetNewsletter]: {
             modalTitleImport: "Import template",
             // ... other options
           },
-          "grapesjs-plugin-ckeditor": {
-            position: "center",
-            options: {
-              startupFocus: true,
-              // Allows any class and any inline style
-              extraAllowedContent: "*(*);*{*}",
-              // Disable auto-formatting, class removing, etc.
-              allowedContent: true,
-              enterMode: CKEDITOR.ENTER_BR,
-              extraPlugins: "sharedspace,justify,colorbutton,panelbutton,font",
-              toolbar: [
-                { name: "styles", items: ["Font", "FontSize"] },
-                ["Bold", "Italic", "Underline", "Strike"],
-                { name: "paragraph", items: ["NumberedList", "BulletedList"] },
-                { name: "links", items: ["Link", "Unlink"] },
-                { name: "colors", items: ["TextColor", "BGColor"] },
-              ],
-            },
-          },
-          /* [gjsBlocksBootstrap4]: {
-            blocks: {},
-            blockCategories: {
-              // ...
-            },
-            labels: {
-              // ...
-            },
-            // ...
-          }, */
         },
 
         canvas: {
@@ -166,23 +122,37 @@ function Editor({ id }) {
           ],
         },
       }); // end grapesjs.init()
-      let htmlContent = e.editor.getHtml();
-      let cssContent = e.editor.getCss();
-      debugger;
-      var blockManager = e.BlockManager;
-      blockManager.add("video", {
-        label: "Background video",
-        category: "Section",
-        content: `
-        <div>
-          <p>Hello</p>
-        </div>
-        `,
+      e.Panels.addButton("options", [
+        {
+          id: "save-db",
+          className: "fa fa-floppy-o",
+          command: "save-db",
+          attributes: { title: "Save DB" },
+        },
+      ]);
+
+      // Add the command
+      e.Commands.add("save-db", {
+        run: function (editor, sender) {
+          sender && sender.set("active", 0); // turn off the button
+          editor.store();
+
+          var htmldata = editor.getHtml();
+          var cssdata = editor.getCss();
+          console.log("Html", htmldata);
+          console.log("Css", cssdata);
+          /* $.post("templates/template",
+            {
+              html: htmldata,
+              css: cssdata
+            }); */
+        },
       });
+      var blockManager = e.BlockManager;
       blockManager.add("my-first-block", {
         label: "Modal",
-        category: "Section",
-        attributes: { class: "fa fa-keyboard" },
+        category: "Advanced",
+        attributes: { class: "fa fa-floppy-o" },
         content: `<!-- Button trigger modal -->
           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
             Launch demo modal
@@ -231,24 +201,26 @@ function Editor({ id }) {
         rel="stylesheet"
         href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-        crossorigin="anonymous"
+        crossOrigin="anonymous"
       ></link>
       <div id={id} />
       <script
         src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"
+        crossOrigin="anonymous"
       ></script>
       <script
         src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"
+        crossOrigin="anonymous"
       ></script>
       <script
         src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"
+        crossOrigin="anonymous"
       ></script>
+      <script src="https://unpkg.com/grapesjs"></script>
+      <script src="../../../node_modules/grapesjs-plugin-modal/dist/grapesjs-plugin-modal.min.js"></script>
     </>
   );
 }
