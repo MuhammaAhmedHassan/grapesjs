@@ -9,6 +9,7 @@ import grapesjsTyped from "grapesjs-typed";
 import gjsPresetNewsletter from "grapesjs-preset-newsletter";
 import gjsModal from "grapesjs-plugin-modal";
 import gjsStyleBg from "grapesjs-style-bg";
+import "grapesjs-plugin-social";
 import gjsStyleFilter from "grapesjs-style-filter";
 import gjsBlocksFlexbox from "grapesjs-blocks-flexbox";
 import gjsTouch from "grapesjs-touch";
@@ -48,6 +49,7 @@ function Editor({ id }) {
           gjsPresetWebpage,
           grapesjsLorySlider,
           grapesjsTabs,
+          "grapesjs-plugin-social",
           grapesjsCustomCode,
           grapesjsTooltip,
           grapesjsTyped,
@@ -59,6 +61,7 @@ function Editor({ id }) {
           cardPlugin,
         ],
         pluginsOpts: {
+          "grapesjs-plugin-social": {},
           [gjsModal]: {},
           [cardPlugin]: {},
           [gjsTouch]: {},
@@ -218,6 +221,7 @@ function Editor({ id }) {
       ></script>
       <script src="https://unpkg.com/grapesjs"></script>
       <script src="../../../node_modules/grapesjs-plugin-modal/dist/grapesjs-plugin-modal.min.js"></script>
+      <script src="../../../node_modules/grapesjs-plugin-social/dist/grapesjs-plugin-social.min.js"></script>
     </>
   );
 }

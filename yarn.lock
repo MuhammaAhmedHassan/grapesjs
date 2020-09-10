@@ -5585,6 +5585,11 @@ grapesjs-plugin-modal@^0.1.37:
   resolved "https://registry.yarnpkg.com/grapesjs-plugin-modal/-/grapesjs-plugin-modal-0.1.37.tgz#94d5eef26943fc184e15d46d245331950c5e13ea"
   integrity sha512-CvVvTJ7qFe5qfwgzRQb1U2xdQsivaPWZ+kd/hbreRl6g04pDGRSLHC4TYFp9yIpbycqxNMwedlS/lhlAtwO/jA==
 
+grapesjs-plugin-social@^0.0.11:
+  version "0.0.11"
+  resolved "https://registry.yarnpkg.com/grapesjs-plugin-social/-/grapesjs-plugin-social-0.0.11.tgz#caac2cd3fa85c52cecf7592a1f770fe124df428d"
+  integrity sha512-GJL1Fwl6ER91+KpexkxsCVcYuCTAATzFlhJZcLfdAtfxuM2x3N5CUyzsw3vxLIOYfYHefv3nf2QC6beTKY/dYw==
+
 grapesjs-preset-newsletter@^0.2.20:
   version "0.2.20"
   resolved "https://registry.yarnpkg.com/grapesjs-preset-newsletter/-/grapesjs-preset-newsletter-0.2.20.tgz#d6b83c1f13e0e95bd87dddcc01c6095a19852c65"
