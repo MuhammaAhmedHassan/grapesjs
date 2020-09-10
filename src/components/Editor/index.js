@@ -20,6 +20,11 @@ import "grapick/dist/grapick.min.css";
 import "grapesjs-preset-webpage/dist/grapesjs-preset-webpage.min.css";
 import "grapesjs-plugin-ckeditor/dist/grapesjs-plugin-ckeditor.min.js";
 
+let code = {
+  html: "",
+  css: "",
+};
+
 function Editor({ id }) {
   let editor = null;
 
@@ -122,6 +127,7 @@ function Editor({ id }) {
           ],
         },
       }); // end grapesjs.init()
+      console.log("Pannel", e.Panels);
       e.Panels.addButton("options", [
         {
           id: "save-db",
@@ -130,6 +136,30 @@ function Editor({ id }) {
           attributes: { title: "Save DB" },
         },
       ]);
+
+      e.Panels.addButton("options", [
+        {
+          id: "fetch-code",
+          className: "fa fa-get-pocket",
+          command: "fetch-code",
+          attributes: { title: "Fetch Code" },
+        },
+      ]);
+
+      e.Commands.add("fetch-code", {
+        run: function (editor, sender) {
+          sender && sender.set("active", 0); // turn off the button
+
+          e.addComponents(`
+          <style>${code.css}</style>
+          <div>
+          ${code.html}
+          </div>
+          `);
+          console.log(code.html);
+          console.log(code.css);
+        },
+      });
 
       // Add the command
       e.Commands.add("save-db", {
@@ -141,6 +171,8 @@ function Editor({ id }) {
           var cssdata = editor.getCss();
           console.log("Html", htmldata);
           console.log("Css", cssdata);
+          code.html = htmldata;
+          code.css = cssdata;
           /* $.post("templates/template",
             {
               html: htmldata,
