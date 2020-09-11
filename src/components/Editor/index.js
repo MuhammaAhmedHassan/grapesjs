@@ -27,7 +27,6 @@ let code = {
 };
 
 function Editor({ id }) {
-  debugger;
   let editor = null;
 
   useEffect(() => {

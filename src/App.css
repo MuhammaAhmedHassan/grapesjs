@@ -109,8 +109,12 @@ body {
   width: 100%;
   outline: none;
 }
-.nav-pills .nav-link.active {
-  background-color: "#b9a4a6" !important;
+.nav-link.active {
+  color: #b9a5a6 !important;
+  background-color: #463a3c !important;
+}
+.nav-link {
+  color: #463a3c !important;
 }
 /* Muflah => Code for Panel settings */
 
