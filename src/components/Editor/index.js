@@ -9,7 +9,7 @@ import grapesjsTyped from "grapesjs-typed";
 import gjsPresetNewsletter from "grapesjs-preset-newsletter";
 import gjsModal from "grapesjs-plugin-modal";
 import gjsStyleBg from "grapesjs-style-bg";
-import "grapesjs-plugin-social";
+import gjsSocial from "grapesjs-plugin-social";
 import gjsStyleFilter from "grapesjs-style-filter";
 import gjsBlocksFlexbox from "grapesjs-blocks-flexbox";
 import gjsTouch from "grapesjs-touch";
@@ -27,6 +27,7 @@ let code = {
 };
 
 function Editor({ id }) {
+  debugger;
   let editor = null;
 
   useEffect(() => {
@@ -49,7 +50,7 @@ function Editor({ id }) {
           gjsPresetWebpage,
           grapesjsLorySlider,
           grapesjsTabs,
-          "grapesjs-plugin-social",
+          gjsSocial,
           grapesjsCustomCode,
           grapesjsTooltip,
           grapesjsTyped,
@@ -61,7 +62,7 @@ function Editor({ id }) {
           cardPlugin,
         ],
         pluginsOpts: {
-          "grapesjs-plugin-social": {},
+          [gjsSocial]: {},
           [gjsModal]: {},
           [cardPlugin]: {},
           [gjsTouch]: {},
@@ -130,7 +131,6 @@ function Editor({ id }) {
           ],
         },
       }); // end grapesjs.init()
-      console.log("Pannel", e.Panels);
       e.Panels.addButton("options", [
         {
           id: "save-db",
@@ -150,15 +150,21 @@ function Editor({ id }) {
         run: function (editor, sender) {
           sender && sender.set("active", 0); // turn off the button
 
+          let html = localStorage.getItem(`${id}html`);
+          let css = localStorage.getItem(`${id}css`);
+
           e.addComponents(`
-          <style>${code.css}</style>
+          <style>${css}</style>
           <div>
-          ${code.html}
+          ${html}
           </div>
           `);
-          console.log(code.html);
-          console.log(code.css);
         },
+      });
+      e.Panels.addButton("views", {
+        id: "another-button",
+        className: "fa fa-paint-brush",
+        command: "open-sm",
       });
 
       // Add the command
@@ -169,10 +175,8 @@ function Editor({ id }) {
 
           var htmldata = editor.getHtml();
           var cssdata = editor.getCss();
-          console.log("Html", htmldata);
-          console.log("Css", cssdata);
-          code.html = htmldata;
-          code.css = cssdata;
+          localStorage.setItem(`${id}html`, htmldata);
+          localStorage.setItem(`${id}css`, cssdata);
           /* $.post("templates/template",
             {
               html: htmldata,

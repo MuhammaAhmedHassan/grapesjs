@@ -95,8 +95,6 @@ body {
   text-align: left;
   padding: 1rem;
 }
-.events-manager .form-group {
-}
 .events-manager .form-group label {
   display: block;
 }
@@ -110,6 +108,9 @@ body {
   border: 1px solid #b9a5a6;
   width: 100%;
   outline: none;
+}
+.nav-pills .nav-link.active {
+  background-color: "#b9a4a6" !important;
 }
 /* Muflah => Code for Panel settings */
 
