@@ -7,7 +7,6 @@ import grapesjsCustomCode from "grapesjs-custom-code";
 import grapesjsTooltip from "grapesjs-tooltip";
 import grapesjsTyped from "grapesjs-typed";
 import gjsPresetNewsletter from "grapesjs-preset-newsletter";
-import gjsModal from "grapesjs-plugin-modal";
 import gjsStyleBg from "grapesjs-style-bg";
 import gjsSocial from "grapesjs-plugin-social";
 import gjsStyleFilter from "grapesjs-style-filter";
@@ -15,6 +14,8 @@ import gjsBlocksFlexbox from "grapesjs-blocks-flexbox";
 import gjsTouch from "grapesjs-touch";
 import cardPlugin from "./plugins/CustomCard";
 import "grapesjs-plugin-modal/dist/grapesjs-plugin-modal.min.js";
+import plugin from "grapesjs-echarts";
+import "grapesjs/dist/css/grapes.min.css";
 // Stylesheets
 import "grapesjs/dist/css/grapes.min.css";
 import "grapick/dist/grapick.min.css";
@@ -50,10 +51,10 @@ function Editor({ id }) {
           grapesjsLorySlider,
           grapesjsTabs,
           gjsSocial,
+          plugin,
           grapesjsCustomCode,
           grapesjsTooltip,
           grapesjsTyped,
-          gjsModal,
           gjsStyleBg,
           gjsStyleFilter,
           gjsBlocksFlexbox,
@@ -61,8 +62,8 @@ function Editor({ id }) {
           cardPlugin,
         ],
         pluginsOpts: {
+          [plugin]: {},
           [gjsSocial]: {},
-          [gjsModal]: {},
           [cardPlugin]: {},
           [gjsTouch]: {},
           [gjsBlocksFlexbox]: {},
@@ -129,7 +130,39 @@ function Editor({ id }) {
             },
           ],
         },
-      }); // end grapesjs.init()
+      });
+      var blockManager = e.BlockManager;
+      blockManager.add("my-first-block", {
+        label: "Modal",
+        category: "Advanced",
+        attributes: { class: "fa fa-window-maximize" },
+        content: `<!-- Button trigger modal -->
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+            Launch demo modal
+          </button>
+          
+          <!-- Modal -->
+          <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  ...
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+              </div>
+            </div>
+          </div>`,
+      });
+      // end grapesjs.init()
       e.Panels.addButton("options", [
         {
           id: "save-db",
@@ -160,12 +193,6 @@ function Editor({ id }) {
           `);
         },
       });
-      e.Panels.addButton("views", {
-        id: "another-button",
-        className: "fa fa-paint-brush",
-        command: "open-sm",
-      });
-
       // Add the command
       e.Commands.add("save-db", {
         run: function (editor, sender) {
