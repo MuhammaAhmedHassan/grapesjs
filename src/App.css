@@ -138,3 +138,45 @@ body {
 #editor > div.gjs-editor.gjs-one-bg.gjs-two-color > div.gjs-pn-panels > div.gjs-pn-panel.gjs-pn-options.gjs-one-bg.gjs-two-color{
   right: 0;
 } */
+.seperator {
+  border: 1px solid #fff;
+}
+.everything-container {
+  display: flex;
+  flex-direction: row;
+}
+.custom-sidebar {
+  margin-top: 40px;
+  width: 300px;
+  background-color: #dc3545;
+}
+.page-container,
+.customPage-container {
+  margin: 5px 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.page-header,
+.customPage-page-title {
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+}
+.pages-add-button {
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #fff;
+}
+
+.customPage-active {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+.customPage-container {
+  padding-bottom: 10px;
+  padding-top: 5px;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+}
