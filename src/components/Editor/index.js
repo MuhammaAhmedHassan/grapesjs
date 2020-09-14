@@ -213,38 +213,38 @@ function Editor({ editor, id, setEditor }) {
         },
       });
 
-      e.Commands.add("fetch-code", {
-        run: function (editor, sender) {
-          sender && sender.set("active", 0); // turn off the button
+      // e.Commands.add("fetch-code", {
+      //   run: function (editor, sender) {
+      //     sender && sender.set("active", 0); // turn off the button
 
-          let html = localStorage.getItem(`${id}-html`);
-          let css = localStorage.getItem(`${id}-css`);
+      //     let html = localStorage.getItem(`${id}-html`);
+      //     let css = localStorage.getItem(`${id}-css`);
 
-          e.addComponents(`
-          <style>${css}</style>
-          <div>
-          ${html}
-          </div>
-          `);
-        },
-      });
-      // Add the command
-      e.Commands.add("save-db", {
-        run: function (editor, sender) {
-          // sender && sender.set("active", 0); // turn off the button
-          editor.store();
+      //     e.addComponents(`
+      //     <style>${css}</style>
+      //     <div>
+      //     ${html}
+      //     </div>
+      //     `);
+      //   },
+      // });
+      // // Add the command
+      // e.Commands.add("save-db", {
+      //   run: function (editor, sender) {
+      //     // sender && sender.set("active", 0); // turn off the button
+      //     editor.store();
 
-          var htmldata = editor.getHtml();
-          var cssdata = editor.getCss();
-          localStorage.setItem(`${id}-html`, htmldata);
-          localStorage.setItem(`${id}-css`, cssdata);
-          /* $.post("templates/template",
-            {
-              html: htmldata,
-              css: cssdata
-            }); */
-        },
-      });
+      //     var htmldata = editor.getHtml();
+      //     var cssdata = editor.getCss();
+      //     localStorage.setItem(`${id}-html`, htmldata);
+      //     localStorage.setItem(`${id}-css`, cssdata);
+      //     /* $.post("templates/template",
+      //       {
+      //         html: htmldata,
+      //         css: cssdata
+      //       }); */
+      //   },
+      // });
       // Remaining code
       if (_editor) {
         console.log("Yup!");
@@ -252,7 +252,8 @@ function Editor({ editor, id, setEditor }) {
       }
     } else {
       if (document) {
-        document.getElementById(id).append(editor.render());
+        const element = document.getElementById(id);
+        if (element) element.append(editor.render());
       }
     }
 
@@ -264,12 +265,42 @@ function Editor({ editor, id, setEditor }) {
     };
   }, []);
 
-  // I've to trigger save
+  useEffect(() => {
+    if (!editor) return;
+    editor.Commands.add("fetch-code", {
+      run: function (_editor, sender) {
+        sender && sender.set("active", 0); // turn off the button
 
-  // useEffect(() => {
-  //   editor.Commands.run("save-db");
-  //   return () => {};
-  // }, [id]);
+        let html = localStorage.getItem(`${id}-html`);
+        let css = localStorage.getItem(`${id}-css`);
+
+        _editor.addComponents(`
+        <style>${css}</style>
+        <div>
+        ${html}
+        </div>
+        `);
+      },
+    });
+    // Add the command
+    editor.Commands.add("save-db", {
+      run: function (_editor, sender) {
+        // sender && sender.set("active", 0); // turn off the button
+        _editor.store();
+
+        var htmldata = _editor.getHtml();
+        var cssdata = _editor.getCss();
+        localStorage.setItem(`${id}-html`, htmldata);
+        localStorage.setItem(`${id}-css`, cssdata);
+        /* $.post("templates/template",
+          {
+            html: htmldata,
+            css: cssdata
+          }); */
+      },
+    });
+    return () => {};
+  }, [id, editor]);
 
   console.log("id ====> ***", id);
 
