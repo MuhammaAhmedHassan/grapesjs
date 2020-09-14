@@ -186,6 +186,33 @@ function Editor({ id }) {
         },
       ]);
 
+      let editPanel = null;
+      e.Commands.add("pages", {
+        run: function (editor, sender) {
+          if (editPanel == null) {
+            const editMenuDiv = document.createElement("div");
+            editMenuDiv.innerHTML = `
+            <div id="your-content">
+                 Input: <input/>
+                 <button>Button</button> 
+                  <!-- eg. bind a click event on button and do something with GrapesJS API -->
+            </div>
+        `;
+            const panels = e.Panels.getPanel("views-container");
+            panels
+              .set("appendContent", editMenuDiv)
+              .trigger("change:appendContent");
+            editPanel = editMenuDiv;
+          }
+          editPanel.style.display = "block";
+        },
+        stop: function (editor) {
+          if (editPanel != null) {
+            editPanel.style.display = "none";
+          }
+        },
+      });
+
       e.Commands.add("fetch-code", {
         run: function (editor, sender) {
           sender && sender.set("active", 0); // turn off the button
