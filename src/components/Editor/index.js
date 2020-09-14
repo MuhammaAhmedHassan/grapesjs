@@ -31,7 +31,7 @@ let code = {
   css: "",
 };
 
-function Editor({ editor, id, setEditor }) {
+function Editor({ editor, id, setEditor, setOpenMenu }) {
   let _editor = null;
   useEffect(() => {
     if (!editor) {
@@ -181,6 +181,24 @@ function Editor({ editor, id, setEditor }) {
           attributes: { title: "Fetch Code" },
         },
       ]);
+      e.Panels.addButton("devices-c", [
+        {
+          id: "toggle",
+          className: "fa fa-plus-square",
+          command: "toggle",
+          togglable: true,
+          active: true,
+          attributes: { title: "Toggle Menu" },
+        },
+      ]);
+      e.Commands.add("toggle", {
+        run: function () {
+          setOpenMenu(false);
+        },
+        stop: function () {
+          setOpenMenu(true);
+        },
+      });
       if (_editor) {
         console.log("Yup!");
         setEditor(_editor);

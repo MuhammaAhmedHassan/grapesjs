@@ -36,6 +36,7 @@ function App() {
   ]);
 
   const [activePage, setActivePage] = useState("page-1");
+  const [openMenu, setOpenMenu] = useState(true);
 
   function changeActivePage(_page) {
     pages.forEach((page) => {
@@ -48,8 +49,7 @@ function App() {
     setActivePage(_page.id);
     setPages([...pages]);
   }
-
-  function addNewPage() {
+  /* function addNewPage() {
     pages.push({
       active: false,
       id: `page-${pages.length + 1}`,
@@ -57,31 +57,38 @@ function App() {
     });
 
     setPages([...pages]);
-  }
+  } */
 
   return (
     <div className="everything-container">
-      <div className="custom-sidebar">
-        <div className="page-container">
-          <span className="page-header pb-2">Pages</span>
-          {/* <span className="pages-add-button" onClick={addNewPage}>
+      {openMenu && (
+        <div className="custom-sidebar">
+          <div className="page-container">
+            <span className="page-header pb-2">Pages</span>
+            {/* <span className="pages-add-button" onClick={addNewPage}>
             +
           </span> */}
+          </div>
+
+          <hr className="seperator" />
+
+          {pages.map((page) => (
+            <CustomPage
+              key={page.id}
+              page={page}
+              changeActivePage={changeActivePage}
+              activePage={activePage}
+            />
+          ))}
         </div>
+      )}
 
-        <hr className="seperator" />
-
-        {pages.map((page) => (
-          <CustomPage
-            key={page.id}
-            page={page}
-            changeActivePage={changeActivePage}
-            activePage={activePage}
-          />
-        ))}
-      </div>
-
-      <Editor editor={editor} setEditor={setEditor} id={activePage} />
+      <Editor
+        editor={editor}
+        setEditor={setEditor}
+        id={activePage}
+        setOpenMenu={setOpenMenu}
+      />
     </div>
   );
 }

@@ -147,7 +147,7 @@ body {
   flex-direction: row;
 }
 .custom-sidebar {
-  padding-top: 40px;
+  padding-top: 8px;
   width: 300px;
   background-color: #463a3c;
 }
