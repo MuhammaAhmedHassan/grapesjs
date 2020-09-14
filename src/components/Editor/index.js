@@ -27,12 +27,11 @@ let code = {
   css: "",
 };
 
-function Editor({ id, savePageContent }) {
-  let editor = null;
-
+function Editor({ editor, id, setEditor }) {
+  let _editor = null;
   useEffect(() => {
     if (!editor) {
-      let e = (editor = grapesjs.init({
+      let e = (_editor = grapesjs.init({
         container: `#${id}`,
         avoidInlineStyle: 1,
         fromElement: 1,
@@ -131,6 +130,7 @@ function Editor({ id, savePageContent }) {
           ],
         },
       }));
+
       var blockManager = e.BlockManager;
       blockManager.add("my-first-block", {
         label: "Modal",
@@ -217,8 +217,8 @@ function Editor({ id, savePageContent }) {
         run: function (editor, sender) {
           sender && sender.set("active", 0); // turn off the button
 
-          let html = localStorage.getItem(`${id}html`);
-          let css = localStorage.getItem(`${id}css`);
+          let html = localStorage.getItem(`${id}-html`);
+          let css = localStorage.getItem(`${id}-css`);
 
           e.addComponents(`
           <style>${css}</style>
@@ -236,8 +236,8 @@ function Editor({ id, savePageContent }) {
 
           var htmldata = editor.getHtml();
           var cssdata = editor.getCss();
-          localStorage.setItem(`${id}html`, htmldata);
-          localStorage.setItem(`${id}css`, cssdata);
+          localStorage.setItem(`${id}-html`, htmldata);
+          localStorage.setItem(`${id}-css`, cssdata);
           /* $.post("templates/template",
             {
               html: htmldata,
@@ -246,6 +246,10 @@ function Editor({ id, savePageContent }) {
         },
       });
       // Remaining code
+      if (_editor) {
+        console.log("Yup!");
+        setEditor(_editor);
+      }
     } else {
       if (document) {
         document.getElementById(id).append(editor.render());
@@ -258,7 +262,7 @@ function Editor({ id, savePageContent }) {
         grapesjs.editors = grapesjs.editors.filter((e) => e !== editor);
       }
     };
-  }, [editor]);
+  }, []);
 
   // I've to trigger save
 

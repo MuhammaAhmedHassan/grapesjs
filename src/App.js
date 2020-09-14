@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "./App.css";
-import { Tabs, Tab } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import Editor from "./components/Editor";
@@ -21,6 +20,8 @@ function CustomPage({ page, changeActivePage, activePage }) {
 }
 
 function App() {
+  const [editor, setEditor] = useState(null);
+
   const [pages, setPages] = useState([
     {
       active: true,
@@ -31,20 +32,19 @@ function App() {
 
   const [activePage, setActivePage] = useState("page-1");
 
-  function savePageContent(editor) {
-    editor.Commands.run("save-db");
-  }
-
   function changeActivePage(_page) {
     pages.forEach((page) => {
       if (page.id === _page.id) page.active = true;
       else page.active = false;
     });
 
+    console.log(editor?.Commands);
+
+    // editor.Commands.run("save-db");
+    editor.DomComponents.clear();
+
     setActivePage(_page.id);
     setPages([...pages]);
-
-    // savePageContent();
   }
 
   function addNewPage() {
@@ -57,19 +57,9 @@ function App() {
     setPages([...pages]);
   }
 
+  console.log(editor ?? "No editor");
+
   return (
-    // <Tabs
-    //   defaultActiveKey="landing"
-    //   id="uncontrolled-tab-example"
-    //   className="myclass"
-    // >
-    //   <Tab eventKey="landing" title="Landing Page">
-    //     <Editor id="editor" />
-    //   </Tab>
-    //   <Tab eventKey="thankyou" title="ThankYou Page">
-    //     <Editor id="profile" />
-    //   </Tab>
-    // </Tabs>
     <div className="everything-container">
       <div className="custom-sidebar">
         <div className="page-container">
@@ -91,7 +81,7 @@ function App() {
         ))}
       </div>
 
-      <Editor id={activePage} savePageContent={savePageContent} />
+      <Editor editor={editor} setEditor={setEditor} id={activePage} />
     </div>
   );
 }
