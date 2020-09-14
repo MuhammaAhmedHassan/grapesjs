@@ -26,7 +26,12 @@ function App() {
     {
       active: true,
       id: "page-1",
-      title: "page1",
+      title: "Landing Page",
+    },
+    {
+      active: false,
+      id: "page-2",
+      title: "ThankYou Page",
     },
   ]);
 
@@ -64,9 +69,9 @@ function App() {
       <div className="custom-sidebar">
         <div className="page-container">
           <span className="page-header">Pages</span>
-          <span className="pages-add-button" onClick={addNewPage}>
+          {/* <span className="pages-add-button" onClick={addNewPage}>
             +
-          </span>
+          </span> */}
         </div>
 
         <hr className="seperator" />
