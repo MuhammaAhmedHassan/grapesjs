@@ -177,6 +177,14 @@ function Editor({ id }) {
           attributes: { title: "Fetch Code" },
         },
       ]);
+      e.Panels.addButton("views", [
+        {
+          id: "pages",
+          className: "fa fa-file",
+          command: "pages",
+          attributes: { title: "Pages" },
+        },
+      ]);
 
       e.Commands.add("fetch-code", {
         run: function (editor, sender) {
