@@ -139,6 +139,7 @@ body {
   right: 0;
 } */
 .seperator {
+  margin-top: 0px;
   border: 1px solid #fff;
 }
 .everything-container {
@@ -146,18 +147,31 @@ body {
   flex-direction: row;
 }
 .custom-sidebar {
-  margin-top: 40px;
+  padding-top: 40px;
   width: 300px;
-  background-color: #dc3545;
+  background-color: #463a3c;
 }
 .page-container,
 .customPage-container {
-  margin: 5px 20px;
+  padding: 5px 20px 0px 20px;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  background-color: #3f3436;
+  margin: 0px;
 }
+
+.customPage-container {
+  margin: 4px;
+  box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.1),
+    -2px 0px 2px 0px rgba(0, 0, 0, 0.1), 2px 0px 2px 0px rgba(0, 0, 0, 0.1),
+    0px -2px 2px 0px rgba(0, 0, 0, 0.1);
+}
+.customPage-container:hover span {
+  color: #ad6686;
+}
+
 .page-header,
 .customPage-page-title {
   color: #fff;
@@ -171,12 +185,12 @@ body {
   color: #fff;
 }
 
-.customPage-active {
-  background-color: rgba(255, 255, 255, 0.1);
+.customPage-active span {
+  color: #ad6686;
 }
 .customPage-container {
   padding-bottom: 10px;
   padding-top: 5px;
   cursor: pointer;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+  margin-bottom: 10px;
 }

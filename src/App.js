@@ -31,6 +31,10 @@ function App() {
 
   const [activePage, setActivePage] = useState("page-1");
 
+  function savePageContent(editor) {
+    editor.Commands.run("save-db");
+  }
+
   function changeActivePage(_page) {
     pages.forEach((page) => {
       if (page.id === _page.id) page.active = true;
@@ -39,6 +43,8 @@ function App() {
 
     setActivePage(_page.id);
     setPages([...pages]);
+
+    // savePageContent();
   }
 
   function addNewPage() {
@@ -85,7 +91,7 @@ function App() {
         ))}
       </div>
 
-      <Editor id={activePage} />
+      <Editor id={activePage} savePageContent={savePageContent} />
     </div>
   );
 }

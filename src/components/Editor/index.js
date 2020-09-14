@@ -27,12 +27,12 @@ let code = {
   css: "",
 };
 
-function Editor({ id }) {
+function Editor({ id, savePageContent }) {
   let editor = null;
 
   useEffect(() => {
     if (!editor) {
-      let e = grapesjs.init({
+      let e = (editor = grapesjs.init({
         container: `#${id}`,
         avoidInlineStyle: 1,
         fromElement: 1,
@@ -130,7 +130,7 @@ function Editor({ id }) {
             },
           ],
         },
-      });
+      }));
       var blockManager = e.BlockManager;
       blockManager.add("my-first-block", {
         label: "Modal",
@@ -231,7 +231,7 @@ function Editor({ id }) {
       // Add the command
       e.Commands.add("save-db", {
         run: function (editor, sender) {
-          sender && sender.set("active", 0); // turn off the button
+          // sender && sender.set("active", 0); // turn off the button
           editor.store();
 
           var htmldata = editor.getHtml();
@@ -258,7 +258,16 @@ function Editor({ id }) {
         grapesjs.editors = grapesjs.editors.filter((e) => e !== editor);
       }
     };
-  }, []);
+  }, [editor]);
+
+  // I've to trigger save
+
+  // useEffect(() => {
+  //   editor.Commands.run("save-db");
+  //   return () => {};
+  // }, [id]);
+
+  console.log("id ====> ***", id);
 
   return (
     <>
