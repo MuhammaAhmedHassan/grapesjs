@@ -21,6 +21,10 @@ import "grapesjs/dist/css/grapes.min.css";
 import "grapick/dist/grapick.min.css";
 import "grapesjs-preset-webpage/dist/grapesjs-preset-webpage.min.css";
 import "grapesjs-plugin-ckeditor/dist/grapesjs-plugin-ckeditor.min.js";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+toast.configure();
 
 let code = {
   html: "",
@@ -216,13 +220,15 @@ function Editor({ editor, id, setEditor }) {
     // Add the command
     editor.Commands.add("save-db", {
       run: function (_editor, sender) {
-        // sender && sender.set("active", 0); // turn off the button
         _editor.store();
 
         var htmldata = _editor.getHtml();
         var cssdata = _editor.getCss();
         localStorage.setItem(`${id}-html`, htmldata);
         localStorage.setItem(`${id}-css`, cssdata);
+        toast("Success! Data save successfuly", {
+          type: "success",
+        });
         /* $.post("templates/template",
           {
             html: htmldata,
@@ -260,8 +266,6 @@ function Editor({ editor, id, setEditor }) {
         crossOrigin="anonymous"
       ></script>
       <script src="https://unpkg.com/grapesjs"></script>
-      <script src="../../../node_modules/grapesjs-plugin-modal/dist/grapesjs-plugin-modal.min.js"></script>
-      <script src="../../../node_modules/grapesjs-plugin-social/dist/grapesjs-plugin-social.min.js"></script>
     </>
   );
 }

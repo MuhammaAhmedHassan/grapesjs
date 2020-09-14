@@ -43,9 +43,6 @@ function App() {
       else page.active = false;
     });
 
-    console.log(editor?.Commands);
-
-    // editor.Commands.run("save-db");
     editor.DomComponents.clear();
 
     setActivePage(_page.id);
@@ -62,13 +59,11 @@ function App() {
     setPages([...pages]);
   }
 
-  console.log(editor ?? "No editor");
-
   return (
     <div className="everything-container">
       <div className="custom-sidebar">
         <div className="page-container">
-          <span className="page-header">Pages</span>
+          <span className="page-header pb-2">Pages</span>
           {/* <span className="pages-add-button" onClick={addNewPage}>
             +
           </span> */}
