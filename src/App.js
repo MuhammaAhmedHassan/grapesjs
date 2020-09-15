@@ -62,8 +62,16 @@ function App() {
   return (
     <div className="everything-container">
       {openMenu && (
-        <div className="custom-sidebar">
+        <div className="custom-sidebar gjs-pn-pages-container">
           <div className="page-container">
+            <div className="my-3">
+              <img src={require("./assets/images/logo.svg")} alt="logo" />
+            </div>
+          </div>
+
+          {/* <hr className="seperator" /> */}
+
+          <div className="page-container mt-4">
             <span className="page-header pb-2">Pages</span>
             {/* <span className="pages-add-button" onClick={addNewPage}>
             +

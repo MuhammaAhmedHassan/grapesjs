@@ -41,6 +41,7 @@ function Editor({ editor, id, setEditor, setOpenMenu }) {
         fromElement: 1,
         showOffsets: 1,
         height: "100vh",
+        width: "100vw",
         styleManager: { clearProperties: 1 },
         modal: {
           backdrop: false,
