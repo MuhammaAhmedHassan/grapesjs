@@ -31,7 +31,7 @@ let code = {
   css: "",
 };
 
-function Editor({ editor, id, setEditor, setOpenMenu }) {
+function Editor({ editor, id, setEditor }) {
   let _editor = null;
   useEffect(() => {
     if (!editor) {
@@ -194,14 +194,66 @@ function Editor({ editor, id, setEditor, setOpenMenu }) {
       ]);
       e.Commands.add("toggle", {
         run: function () {
-          setOpenMenu(false);
+          const leftSidebar = document.getElementsByClassName(
+            "custom-sidebar gjs-pn-pages-container"
+          )[0];
+
+          // leftSidebar.classList.remove("d-block");
+          // leftSidebar.classList.add("d-none");
         },
         stop: function () {
-          setOpenMenu(true);
+          const leftSidebar = document.getElementsByClassName(
+            "custom-sidebar gjs-pn-pages-container"
+          )[0];
+
+          // leftSidebar.classList.remove("d-none");
+          // leftSidebar.className = leftSidebar.className + " d-block";
         },
       });
+
+      let editPanel = null;
+      e.Panels.addButton("views", [
+        {
+          id: "pages",
+          active: false,
+          // togglable: true,
+          command: {
+            run: function (editor) {
+              if (editPanel === null) {
+                const editMenuDiv = document.createElement("div");
+                editMenuDiv.innerHTML = `
+                <div id="your-content">
+                  Input: <input/>
+                  <button>Button</button> 
+                  <!-- eg. bind a click event on button and do something with GrapesJS API -->
+                </div>
+                `;
+
+                const panels = e.Panels.getPanel("views-container");
+                panels
+                  .set("appendContent", editMenuDiv)
+                  .trigger("change:appendContent");
+
+                editPanel = editMenuDiv;
+              }
+              editPanel.style.display = "block";
+            },
+            stop: function (editor) {
+              if (editPanel !== null) {
+                editPanel.style.display = "none";
+              }
+            },
+          },
+          attributes: { title: "Add Pages", class: "fa fa-file" },
+        },
+      ]);
+
+      //       const content = document.querySelector('#your-content');
+      // editor.on('load', () => {
+      //      document.querySelector('.your-custom-panel'). appendChild(content);
+      // })
+
       if (_editor) {
-        console.log("Yup!");
         setEditor(_editor);
       }
     } else {
@@ -257,8 +309,6 @@ function Editor({ editor, id, setEditor, setOpenMenu }) {
     });
     return () => {};
   }, [id, editor]);
-
-  console.log("id ====> ***", id);
 
   return (
     <>

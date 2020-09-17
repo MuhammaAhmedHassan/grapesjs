@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -19,8 +19,58 @@ function CustomPage({ page, changeActivePage, activePage }) {
   );
 }
 
+function LeftSideBar({ pages, changeActivePage, activePage }) {
+  return (
+    <div className="custom-sidebar gjs-pn-pages-container">
+      <div>
+        <div className="page-container">
+          <div className="my-3">
+            <img src={require("./assets/images/logo.svg")} alt="logo" />
+          </div>
+        </div>
+
+        <div className="page-container mt-4  accordion">
+          <span className="page-header pb-2">Pages</span>
+          {/* <span className="pages-add-button" onClick={addNewPage}>
+      +
+    </span> */}
+        </div>
+        <hr className="seperator" />
+
+        <div className="panel">
+          {pages.map((page) => (
+            <CustomPage
+              key={page.id}
+              page={page}
+              changeActivePage={changeActivePage}
+              activePage={activePage}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function App() {
   const [editor, setEditor] = useState(null);
+
+  useEffect(() => {
+    const acc = document.getElementsByClassName("accordion")[0];
+
+    // acc.addEventListener("click", function () {
+    //   this.classList.toggle("active");
+    //   var panel = this.nextElementSibling.nextElementSibling;
+
+    //   if (panel?.style.maxHeight) {
+    //     panel.style.maxHeight = null;
+    //   } else {
+    //     panel.style.maxHeight = panel.scrollHeight + "px";
+    //   }
+    // });
+
+    return () => {};
+  }, []);
 
   const [pages, setPages] = useState([
     {
@@ -36,7 +86,6 @@ function App() {
   ]);
 
   const [activePage, setActivePage] = useState("page-1");
-  const [openMenu, setOpenMenu] = useState(true);
 
   function changeActivePage(_page) {
     pages.forEach((page) => {
@@ -60,44 +109,18 @@ function App() {
   } */
 
   return (
-    <div className="everything-container">
-      {openMenu && (
-        <div className="custom-sidebar gjs-pn-pages-container">
-          <div className="page-container">
-            <div className="my-3">
-              <img src={require("./assets/images/logo.svg")} alt="logo" />
-            </div>
-          </div>
+    // <div className="everything-container">
+    <>
+      {/* <LeftSideBar
+        pages={pages}
+        changeActivePage={changeActivePage}
+        activePage={activePage}
+      /> */}
 
-          {/* <hr className="seperator" /> */}
+      {/* class="gjs-frame-wrapper__right" */}
 
-          <div className="page-container mt-4">
-            <span className="page-header pb-2">Pages</span>
-            {/* <span className="pages-add-button" onClick={addNewPage}>
-            +
-          </span> */}
-          </div>
-
-          <hr className="seperator" />
-
-          {pages.map((page) => (
-            <CustomPage
-              key={page.id}
-              page={page}
-              changeActivePage={changeActivePage}
-              activePage={activePage}
-            />
-          ))}
-        </div>
-      )}
-
-      <Editor
-        editor={editor}
-        setEditor={setEditor}
-        id={activePage}
-        setOpenMenu={setOpenMenu}
-      />
-    </div>
+      <Editor editor={editor} setEditor={setEditor} id={activePage} />
+    </>
   );
 }
 
